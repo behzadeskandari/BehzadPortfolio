@@ -4,8 +4,24 @@ import Layout from "../components/Layout";
 
 
  class Index extends Component {
+static async getInitialProps({req,res,query}){
+  let stories;
+  let page;
+  try{
+      page = Number(query.page) || 1; 
+      const response = await fetch(`https://node-hnapi.herokuapp.com/news?page=${page}`);
 
-componentDidMount(){
+      stories = await response.json();
+
+  }catch(err){
+    console.log(err);
+    stories = [];
+  }
+
+  return {page, stories};
+}
+
+componentDidMount() {
   if("serviceWorker" in navigator){
     navigator.serviceWorker
     .register("/service-worker.js")
@@ -14,24 +30,59 @@ componentDidMount(){
     }) .catch(err => {
       console.warn("Service worker registeration failed",err.message);
     })
-  }
+  }  
 }
+render(){
+   const {stories , page }= this.props;
 
+   if(stories.length === 0){
+     return <Error statusCode={503} />
+   }
 
-render()
-  {
-    return(<Layout title="Home">
+   return(
+    <Layout title="Home" description>
       <p>Welcome To the Home Page</p>
       <Link href="/about">
         <a>Go To About Page </a>
       </Link>
-    </Layout>)
-  }
-};
+      
+    </Layout>
+   )
+}
+
+// componentDidMount(){
+//   if("serviceWorker" in navigator){
+//     navigator.serviceWorker
+//     .register("/service-worker.js")
+//     .then(registration => {
+//       console.log("Service Worker Register Successfull",registration);
+//     }) .catch(err => {
+//       console.warn("Service worker registeration failed",err.message);
+//     })
+//   }
+// }
+
+
+// render()
+//   {
+//     return(
+    
+
+
+//     // <Layout title="Home" description>
+//     //   <p>Welcome To the Home Page</p>
+//     //   <Link href="/about">
+//     //     <a>Go To About Page </a>
+//     //   </Link>
+      
+//     // </Layout>
+//     )
+//   }
+// };
 
 
 
-export default Index;
+//export default Index;
 
 
 
@@ -39,4 +90,4 @@ export default Index;
 
 
 ///npm run build
-///npm start  for starting node js 
+//npm start  for starting node js 

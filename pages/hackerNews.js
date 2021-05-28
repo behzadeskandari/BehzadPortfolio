@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 import {Component} from 'react';
-import StoryList from "./StoryList";
+import StoryList from "../components/StoryList";
 export default class HackerNews extends Component {
 
 static async getInitialProps({req,res,query}){

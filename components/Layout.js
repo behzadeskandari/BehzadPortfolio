@@ -18,59 +18,85 @@ Router.OnRouteChangeError = () => NProgress.done();
 export default ({ children, title }) => (
   <div className="root">
     <Head>
-      <title>NextProtfolio</title>
+      <title>{title}</title>
+      <meta name="description" content={description} />
     </Head>
-    <header>
-      <Link href="/">
-        <a>Home </a>
-      </Link>
-      <Link href="/about">
-        <a>About </a>
-      </Link>
-      <Link href="/hireme">
-        <a>HireMe </a>
-      </Link>{" "}
-      <Link href="/blog">
-        <a>blog </a>
-      </Link>
-      <Link href="/hackerNews">
-        <a>hackerNews </a>
-      </Link>
-    </header>
+    <div className="container">
+      <nav>
+          {backButton && <span onClick={() => Router.back()} className="back-button">&#x2b05;</span>}
+        <Link href="/">
+          <a>Home </a>
+        </Link>
+        <Link href="/about">
+          <a>About </a>
+        </Link>
+        <Link href="/hireme">
+          <a>HireMe </a>
+        </Link>{" "}
+        <Link href="/blog">
+          <a>blog </a>
+        </Link>
+        <Link href="/hackerNews">
+          <a>hackerNews </a>
+        </Link>
+      </nav>
+    </div>
 
     <h1>{title}</h1>
     {children}
 
     <footer>&copy; {new Date().getFullYear()} Footer</footer>
     <style jsx>{`
-      .root {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+      .container{
+        max-width: 800px;
+        margin : 0 auto;
+        background: #f6f6ef;
       }
-      header {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        padding: 1em;
-        font-size: 1.2rem;
-        background: indigo;
+      nav{
+        background: #f60;
+        padding : 1em;
       }
-
-      header a {
-        color: darkgray;
-        text-decoration: none;
+      nav > * {
+        display: inline-block;
+        color: black;
       }
-      header a:hover {
-        font-wight: bold;
-        color: lightgrey;
+      nav a {
+        text-decoration : none;
       }
-      footer {
-        padding: 1em;
+      nav .main-title{
+        font-weight: bold;
       }
+      nav .back-button {
+        font-wight: 600;
+        cursor : pointer;
+      }      
     `}</style>
+       {
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      //   flex-direction: column;
+      // }
+      // header {
+      //   width: 100%;
+      //   display: flex;
+      //   justify-content: space-around;
+      //   padding: 1em;
+      //   font-size: 1.2rem;
+      //   background: indigo;
+      // }
 
+      // header a {
+      //   color: darkgray;
+      //   text-decoration: none;
+      // }
+      // header a:hover {
+      //   font-wight: bold;
+      //   color: lightgrey;
+      // }
+      // footer {
+      //   padding: 1em;
+       }
     <style global jsx>
       {`
         body {
